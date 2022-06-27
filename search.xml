@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>yolo</title>
+      <link href="/2022/06/24/yolo/"/>
+      <url>/2022/06/24/yolo/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>yolov3说明</title>
+      <link href="/2022/06/23/yolov3-shuo-ming/"/>
+      <url>/2022/06/23/yolov3-shuo-ming/</url>
+      
+        <content type="html"><![CDATA[<ul><li><p>yolo是根据中心点，w和h  （速度快，互不影响）</p></li><li><p>传统目标检测：左下角和右下角的坐标</p></li></ul><p>yolo将物体分为了9种：大中小—正方形 长矩形 竖矩形</p><p>首先把图片等分，然后根据锚点画框，最后通过IOU来判断框。</p><p>偏移量：通过中心点的坐标去数格子，坐标除以格子的宽度可以得到格子的位置 再分离整数部分和小数部分，小数部分就是偏移量。（求pw,ph,分类）【对神经网络的输出取指数，最后取对数】</p><p>1*1卷积的目的是降通道，例如（32，32，10）通过（1，1，10）生成（32，32，1）的特征图</p><p>3*3卷积的目的是像素融合并进行降通道</p><p>下采样原理:图像尺寸为M<em>N。对其进行s倍下采样，即得到（M/s）</em>(N/s)尺寸的分辨率图像，s需为M和N的公约数，对于矩阵形式图像的含义即为将原始图像s*s窗口内的图像编程为一个像素，这个像素点的值就是窗口内所有像素的均值。在YOLOv3的网络结构中并未采用最大值池化或平均值池化方法进行降采样，而是采用步长为2的卷积来进行降采样。</p><p>上采样原理:图像放大几乎都是采用内插值方法，即在原有图像的基础上在各个像素之间采用合适的插值算法插入新的元素。</p><p>在YOLOv3的网络结构中共图像的像素进行了5次下采样，每次采样步长为2，所以输入图像的大小需要为32的倍数。</p><p>concat层：张量拼接 将darknet中间层和后面的某一层的上采样进行拼接（特征有前后关系，深度不同的情况下）</p><p><img src="/2022/06/23/yolov3-shuo-ming/image-20220609191045044.png"></p><p><span class="github-emoji"><span>😂</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f602.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> yolo </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> -深度学习 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
