@@ -443,21 +443,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-07-01
+                    2022-07-08
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    416
+                    1.4k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    4 分
                 </div>
                 
 
@@ -512,6 +512,101 @@
 <p><strong>Selective Search算法：</strong></p>
 <p>使用贪心算法，将空间相邻且特征相似的图像块逐步合并到一起，形成可能包含物体的区域，<strong>称为提议区域或提议框</strong>。</p>
 <p><img src="/2022/07/01/openmmlab/image-20220701150042983.png"></p>
+<h2 id="基于区域的检测方法R-CNN"><a href="#基于区域的检测方法R-CNN" class="headerlink" title="基于区域的检测方法R-CNN"></a>基于区域的检测方法R-CNN</h2><p>两阶段方法：</p>
+<ol>
+<li><p>可学习部分：卷积神经网络的主干，分类器，回归模型</p>
+<p>对于提议框P和标注框B</p>
+<ul>
+<li><p>如果二者重叠较大</p>
+<p>分类目标值 = B的类别标注</p>
+<p>回归目标值 = 编码后的偏差值</p>
+</li>
+<li><p>如果二者重叠较小</p>
+<p>分类目标值 = 背景</p>
+<p>回归分支不计算LOSS</p>
+</li>
+</ul>
+<p><img src="/2022/07/01/openmmlab/image-20220705162437266.png"></p>
+</li>
+<li><p>IOU 定义为两个矩形框交集面积与并集面积的比值</p>
+</li>
+<li><p>非极大值抑制（NMS）</p>
+<p>检测算法有时会针对单个物体给出多个相近的检测框，并在所有重叠框中保留置信度最高的一个</p>
+<p>算法过程：</p>
+<p><strong>输入：</strong>检测器产生的一系列检测框P = {P<del>1</del>，……，P<del>n</del>}以及对应置信度s = {s<del>1</del>，……，s<del>n</del>}，IoU阈值为t</p>
+<p><strong>步骤：</strong> 1.初始化结果集 R 为空集</p>
+<p>​            2.重复至 P 为空集</p>
+<ul>
+<li>找出P中置信度最大的框Pi并加入R</li>
+<li>从P中删除Pi以及与Pi交并比大于t的框</li>
+</ul>
+</li>
+</ol>
+<p>​        <strong>输出：</strong>结果集为R</p>
+<h2 id="历史上的RCNN"><a href="#历史上的RCNN" class="headerlink" title="历史上的RCNN"></a>历史上的RCNN</h2><ul>
+<li>卷积网络使用AlexNet</li>
+<li>使用Selective Search产生提议框</li>
+<li>非端到端训练，先训练卷积网络的主干部分，再基于卷积网络的特征训练SVM分类器</li>
+<li>非多任务学习，先训练分类模型，再边界框回归单独训练</li>
+<li>根据配置不同，单图推理几秒~几十秒</li>
+</ul>
+<h2 id="两阶段方法的演进（2014-2017）"><a href="#两阶段方法的演进（2014-2017）" class="headerlink" title="两阶段方法的演进（2014-2017）"></a>两阶段方法的演进（2014-2017）</h2><p><strong>Fast RCNN ：</strong>提出了Rol Pooling方法，把区域从图像移动到特征图上，大幅降低了计算量。</p>
+<p>具体流程：</p>
+<p><img src="/2022/07/01/openmmlab/image-20220706185621684.png"></p>
+<ol>
+<li>将原图的提议框按照几何比例缩放到特征图上</li>
+<li>利用RoI Pooling,将不同尺寸的特征图变换到相同大小，对于每个提议框，可以的得到固定尺寸的特征图。</li>
+<li>基于相同尺寸的特征图进行分类和回归</li>
+</ol>
+<p>Fast RCNN虽然速度上远超RCNN，但产生提议框仍依赖外部算法，成为速度瓶颈</p>
+<p><strong>解决方案：</strong>使用卷积网络产生提议框，并与检测器共享主干网络结构</p>
+<p><strong>Faster RCNN：</strong>提出了RPN网络，用于替换传统方法，产生区域提议，进一步提高效率。</p>
+<p>使用滑窗的思路进行空间密集预测，并使用轻量网络（例如单层3×3卷积）作为检测头，降低计算量。</p>
+<p>引入锚框的概念来处理不同大小的物体，不同的锚框共享特征，多个检测头为同一卷积层的不同通道。</p>
+<p>RPN产生区域提议：</p>
+<ol>
+<li>主干网络产生特征图</li>
+<li>不同的检测头产生区域提议(分类+边界框回归</li>
+<li>集合所有提议框，做NMS</li>
+</ol>
+<p><img src="/2022/07/01/openmmlab/image-20220706212009207.png"></p>
+<p>训练过程：</p>
+<ul>
+<li><p>Faster RCNN RPN Fast RCNN</p>
+</li>
+<li><p>每部分产生分类和回归oss</p>
+</li>
+<li><p>两者共同回传梯度、共同优化</p>
+<p><img src="/2022/07/01/openmmlab/image-20220706212344427.png"></p>
+</li>
+</ul>
+<p><strong>Mask RCNN：</strong>提出了ROIAlign算法替换ROIPooling，加入用于实例分割的分支。</p>
+<p><strong>问题：</strong>RoI Pooling对非整数边界框取整，产生位置偏差</p>
+<p><strong>思路：</strong>为保留空间精度，使用“非整数坐标”的特征</p>
+<p>方法：插值-&gt;RoI Align （双线性插值）</p>
+<p>算法流程：</p>
+<ol>
+<li>将提议区域切成固定数目的格子，例如7×7</li>
+<li>在每个格子中，均匀选取若干采样点，如2×2=4个</li>
+<li>通过插值方法得到每个采样点处的精确特征</li>
+<li>所有采样点做Pooling得到输出结果</li>
+</ol>
+<p>单级特征图的问题：</p>
+<p>高层次特诊空间降采样率比较大-&gt;小物体信息丢失</p>
+<p><strong>解决思路：</strong></p>
+<ol>
+<li>基于低一层特侦图预测 -&gt;低层特征语义信息薄弱</li>
+<li>图像金字塔 -&gt;低效率</li>
+</ol>
+<p>通过融合高＋低层次的特征 -&gt;特征金字塔网络（FPN）</p>
+<h2 id="MMDetection"><a href="#MMDetection" class="headerlink" title="MMDetection"></a>MMDetection</h2><p><strong>mmdet：</strong></p>
+<ul>
+<li>API：包括训练，推理，测试的高层次API</li>
+<li>core：anchor,bbox,mask等模块的实现</li>
+<li>datasets：数据集支持，数据预处理与数据增强</li>
+<li>mdels：检测模型的实现</li>
+<li>utils：辅助工具</li>
+</ul>
 
                 
             </div>
@@ -1249,7 +1344,7 @@
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">895</span>&nbsp;字
+                class="white-color">1.9k</span>&nbsp;字
             
             
             
