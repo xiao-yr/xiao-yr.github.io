@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="openmmdetaction, 摸鱼闲话">
+    <meta name="keywords" content="C++面试宝典, 摸鱼闲话">
     <meta name="description" content="有空得闲，偷得浮生半日闲">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>openmmdetaction | 摸鱼闲话</title>
+    <title>C++面试宝典 | 摸鱼闲话</title>
     <link rel="icon" type="image/png" href="/free.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -290,12 +290,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">openmmdetaction</h1>
+                    <h1 class="description center-align post-title">C++面试宝典</h1>
                 </div>
             </div>
         </div>
@@ -411,8 +411,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                                <span class="chip bg-color">-深度学习</span>
+                            <a href="/tags/C/">
+                                <span class="chip bg-color">-C++</span>
                             </a>
                         
                     </div>
@@ -423,8 +423,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/openmmlab/" class="post-category">
-                                openmmlab
+                            <a href="/categories/C-%E9%9D%A2%E8%AF%95/" class="post-category">
+                                C++面试
                             </a>
                         
                     </div>
@@ -436,28 +436,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-07-01
+                    2022-09-05
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-07-08
+                    2022-09-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    827
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    4 分
+                    3 分
                 </div>
                 
 
@@ -477,137 +477,89 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="目标检测"><a href="#目标检测" class="headerlink" title="目标检测"></a>目标检测</h2><h3 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h3><p>图像分类：</p>
-<ol>
-<li>将图像切分成多块</li>
-<li>用分类算法对每个图像块进行预测</li>
-<li>检测结果=（分类结果，图像位置）</li>
-</ol>
-<p>问题：图像分块过于粗糙，无法检测分块边界上的物体</p>
-<p><strong>改进</strong>：</p>
-<ol>
-<li>使用重叠的窗口，覆盖更多可能出现物体的位置</li>
-<li>用分类算法检测每个图像块</li>
-<li>检测结果=(分类结果，滑窗位置)</li>
-</ol>
-<p>问题：滑窗边界与物体精确边界有偏差</p>
-<p><strong>改进</strong>：分类的同时预测物体的精确位置 –<strong>边界框回归</strong></p>
-<p><strong>问题</strong>：不同物体大小不同，长宽比不同</p>
-<p><strong>解决方案：</strong></p>
-<ol>
-<li><p>使用大小不同，长宽比不同的滑窗（yolo里面是9种）</p>
-<p><img src="/2022/07/01/openmmlab/image-20220701140554357.png"></p>
-</li>
-<li><p>将图像缩放到不同大小，构建图像金字塔，相同大小的窗口在不同尺寸的图像上可以检测不同尺寸的物体</p>
-</li>
-</ol>
-<p><img src="/2022/07/01/openmmlab/image-20220701140331584.png"></p>
-<p>滑窗 = 空间上的密集预测</p>
-<p>考虑800×600的图像，使用80×60的窗，步长10像素滑动</p>
-<p>需要在4800个窗上进行分类预测</p>
-<p>×每个位置5个尺度的窗</p>
-<p>×每个尺度3个长宽比</p>
-<p>≈检测一张图像需要完成数万次图像分类预测 （<font color="red">难以实现实时检测</font>）</p>
-<p><strong>分析：</strong>大量窗口都落在不包含物体的边界区域。可以先通过简单快速的方法找出可能含物体的区域。</p>
-<p><strong>Selective Search算法：</strong></p>
-<p>使用贪心算法，将空间相邻且特征相似的图像块逐步合并到一起，形成可能包含物体的区域，<strong>称为提议区域或提议框</strong>。</p>
-<p><img src="/2022/07/01/openmmlab/image-20220701150042983.png"></p>
-<h2 id="基于区域的检测方法R-CNN"><a href="#基于区域的检测方法R-CNN" class="headerlink" title="基于区域的检测方法R-CNN"></a>基于区域的检测方法R-CNN</h2><p>两阶段方法：</p>
-<ol>
-<li><p>可学习部分：卷积神经网络的主干，分类器，回归模型</p>
-<p>对于提议框P和标注框B</p>
-<ul>
-<li><p>如果二者重叠较大</p>
-<p>分类目标值 = B的类别标注</p>
-<p>回归目标值 = 编码后的偏差值</p>
-</li>
-<li><p>如果二者重叠较小</p>
-<p>分类目标值 = 背景</p>
-<p>回归分支不计算LOSS</p>
-</li>
-</ul>
-<p><img src="/2022/07/01/openmmlab/image-20220705162437266.png"></p>
-</li>
-<li><p>IOU 定义为两个矩形框交集面积与并集面积的比值</p>
-</li>
-<li><p>非极大值抑制（NMS）</p>
-<p>检测算法有时会针对单个物体给出多个相近的检测框，并在所有重叠框中保留置信度最高的一个</p>
-<p>算法过程：</p>
-<p><strong>输入：</strong>检测器产生的一系列检测框P = {P<del>1</del>，……，P<del>n</del>}以及对应置信度s = {s<del>1</del>，……，s<del>n</del>}，IoU阈值为t</p>
-<p><strong>步骤：</strong> 1.初始化结果集 R 为空集</p>
-<p>​            2.重复至 P 为空集</p>
-<ul>
-<li>找出P中置信度最大的框Pi并加入R</li>
-<li>从P中删除Pi以及与Pi交并比大于t的框</li>
-</ul>
-</li>
-</ol>
-<p>​        <strong>输出：</strong>结果集为R</p>
-<h2 id="历史上的RCNN"><a href="#历史上的RCNN" class="headerlink" title="历史上的RCNN"></a>历史上的RCNN</h2><ul>
-<li>卷积网络使用AlexNet</li>
-<li>使用Selective Search产生提议框</li>
-<li>非端到端训练，先训练卷积网络的主干部分，再基于卷积网络的特征训练SVM分类器</li>
-<li>非多任务学习，先训练分类模型，再边界框回归单独训练</li>
-<li>根据配置不同，单图推理几秒~几十秒</li>
-</ul>
-<h2 id="两阶段方法的演进（2014-2017）"><a href="#两阶段方法的演进（2014-2017）" class="headerlink" title="两阶段方法的演进（2014-2017）"></a>两阶段方法的演进（2014-2017）</h2><p><strong>Fast RCNN ：</strong>提出了Rol Pooling方法，把区域从图像移动到特征图上，大幅降低了计算量。</p>
-<p>具体流程：</p>
-<p><img src="/2022/07/01/openmmlab/image-20220706185621684.png"></p>
-<ol>
-<li>将原图的提议框按照几何比例缩放到特征图上</li>
-<li>利用RoI Pooling,将不同尺寸的特征图变换到相同大小，对于每个提议框，可以的得到固定尺寸的特征图。</li>
-<li>基于相同尺寸的特征图进行分类和回归</li>
-</ol>
-<p>Fast RCNN虽然速度上远超RCNN，但产生提议框仍依赖外部算法，成为速度瓶颈</p>
-<p><strong>解决方案：</strong>使用卷积网络产生提议框，并与检测器共享主干网络结构</p>
-<p><strong>Faster RCNN：</strong>提出了RPN网络，用于替换传统方法，产生区域提议，进一步提高效率。</p>
-<p>使用滑窗的思路进行空间密集预测，并使用轻量网络（例如单层3×3卷积）作为检测头，降低计算量。</p>
-<p>引入锚框的概念来处理不同大小的物体，不同的锚框共享特征，多个检测头为同一卷积层的不同通道。</p>
-<p>RPN产生区域提议：</p>
-<ol>
-<li>主干网络产生特征图</li>
-<li>不同的检测头产生区域提议(分类+边界框回归</li>
-<li>集合所有提议框，做NMS</li>
-</ol>
-<p><img src="/2022/07/01/openmmlab/image-20220706212009207.png"></p>
-<p>训练过程：</p>
-<ul>
-<li><p>Faster RCNN RPN Fast RCNN</p>
-</li>
-<li><p>每部分产生分类和回归oss</p>
-</li>
-<li><p>两者共同回传梯度、共同优化</p>
-<p><img src="/2022/07/01/openmmlab/image-20220706212344427.png"></p>
-</li>
-</ul>
-<p><strong>Mask RCNN：</strong>提出了ROIAlign算法替换ROIPooling，加入用于实例分割的分支。</p>
-<p><strong>问题：</strong>RoI Pooling对非整数边界框取整，产生位置偏差</p>
-<p><strong>思路：</strong>为保留空间精度，使用“非整数坐标”的特征</p>
-<p>方法：插值-&gt;RoI Align （双线性插值）</p>
-<p>算法流程：</p>
-<ol>
-<li>将提议区域切成固定数目的格子，例如7×7</li>
-<li>在每个格子中，均匀选取若干采样点，如2×2=4个</li>
-<li>通过插值方法得到每个采样点处的精确特征</li>
-<li>所有采样点做Pooling得到输出结果</li>
-</ol>
-<p>单级特征图的问题：</p>
-<p>高层次特诊空间降采样率比较大-&gt;小物体信息丢失</p>
-<p><strong>解决思路：</strong></p>
-<ol>
-<li>基于低一层特侦图预测 -&gt;低层特征语义信息薄弱</li>
-<li>图像金字塔 -&gt;低效率</li>
-</ol>
-<p>通过融合高＋低层次的特征 -&gt;特征金字塔网络（FPN）</p>
-<h2 id="MMDetection"><a href="#MMDetection" class="headerlink" title="MMDetection"></a>MMDetection</h2><p><strong>mmdet：</strong></p>
-<ul>
-<li>API：包括训练，推理，测试的高层次API</li>
-<li>core：anchor,bbox,mask等模块的实现</li>
-<li>datasets：数据集支持，数据预处理与数据增强</li>
-<li>mdels：检测模型的实现</li>
-<li>utils：辅助工具</li>
-</ul>
+                <h1 id="GCC编译过程"><a href="#GCC编译过程" class="headerlink" title="GCC编译过程"></a>GCC编译过程</h1><h3 id="一、引言"><a href="#一、引言" class="headerlink" title="一、引言"></a>一、引言</h3><p>GCC：“GNU Compiler Collection”，是一组编译器集合，支持C、C++、Objective-C、Objective-C++、Go和RBIG语言的编译。、</p>
+<p>GCC完整的编译过程分为4个阶段，分别为预处理、编译、装载和链接。</p>
+<h3 id="二、GCC编译的输出参数"><a href="#二、GCC编译的输出参数" class="headerlink" title="二、GCC编译的输出参数"></a>二、GCC编译的输出参数</h3><p>  由于GCC是一组编译器集合，因此输入的文件后缀名决定了GCC的编译方式，下面列出了常见的文件后缀名对应的编译方式：</p>
+<table>
+<thead>
+<tr>
+<th align="center">文件后缀名</th>
+<th align="center">编译方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">.c</td>
+<td align="center">C语言源代码，并且需要进行预处理</td>
+</tr>
+<tr>
+<td align="center">.i</td>
+<td align="center">已经预处理完成后的C语言源代码</td>
+</tr>
+<tr>
+<td align="center">.ii</td>
+<td align="center">已经预处理完成后的C++源代码</td>
+</tr>
+<tr>
+<td align="center">.m</td>
+<td align="center">Objective-C源代码，并且必须进行libobjc库的链接</td>
+</tr>
+<tr>
+<td align="center">.mi</td>
+<td align="center">已经预处理完成后的Objective-C源代码</td>
+</tr>
+<tr>
+<td align="center">.M或.mm</td>
+<td align="center">Objective-C++源代码，并且必须进行libobjc库的链接</td>
+</tr>
+<tr>
+<td align="center">.mii</td>
+<td align="center">已经预处理完成后的Objective-C++源代码</td>
+</tr>
+<tr>
+<td align="center">.h</td>
+<td align="center">C,C++,Objective-C的头文件，会被处理进预编译头</td>
+</tr>
+<tr>
+<td align="center">.cc , .cp , .cxx , .cpp , .CPP , .c++ , .C</td>
+<td align="center">C++语言源文件，需要进行预编译处理</td>
+</tr>
+<tr>
+<td align="center">.f , .for , .ftn</td>
+<td align="center">已经预处理完成后的Fortran语言源文件</td>
+</tr>
+<tr>
+<td align="center">.F , .FOR , .fpp , .FPP , .FTN</td>
+<td align="center">Fortran语言源文件，需要进行预编译处理</td>
+</tr>
+<tr>
+<td align="center">go</td>
+<td align="center">Go语言源文</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>下面以一个简单的C语言源文件来作为示例文件进行GCC的编译演示，首先编写一个简单的C程序如下，将文件名命名为a.c：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> <span class="type">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%s\n"</span>,<span class="string">"Hello"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
 
+<h4 id="·预编译处理"><a href="#·预编译处理" class="headerlink" title="·预编译处理"></a>·预编译处理</h4><p>  使用 -E 参数设置GCC只进行预编译处理，例如对上面的a.c源文件执行如下的GCC命令：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.c -E &gt; a.i</span><br></pre></td></tr></tbody></table></figure>
+
+<p>需要注意，GCC会将编译后的内容输出到a.i这个文件中，执行命令后，打开a.i文件，你会发现一个简单的C源文件被预处理成了500多行代码，你可以尝试在源文件中添加宏定义，预处理后所有的宏定义都被直接替换了。</p>
+<p>  使用 -S 参数设置GCC进行编译功能，可以将预处理后的文件编译为汇编源代码，例如：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.i -S &gt; a.S</span><br></pre></td></tr></tbody></table></figure>
+
+<p>.S为后缀名的文件为汇编源文件，-S编译是高级语言向低级语言转换的过程。</p>
+<p>使用 -c 参数设置GCC进行编译，可以将汇编后的汇编源文件编译成机器代码。例如：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.i -c &gt; a.o</span><br></pre></td></tr></tbody></table></figure>
+
+<p>.o后缀名的文件一般我们就没有办法读懂了，其是机器码。-c编译是编程语言向机器语言转换的过程。</p>
+<p>除了上面提到的几个参数外，可以使用-o参数直接生成目标文件，这个参数会根据输入文件的后缀名进行处理，直接生成可执行文件，例如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.o -o a.out</span><br></pre></td></tr></tbody></table></figure>
+
+<p>其实使用.c为后缀名的C语言源文件也可以直接使用-o参数生成可执行文件，此时GCC会聚合前面的预处理，编译，连接等过程。.out为后缀名的文件是可执行文件，在终端可以直接执行</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc a.o -o a.out</span><br><span class="line">Hello</span><br></pre></td></tr></tbody></table></figure>
                 
             </div>
             <hr/>
@@ -633,7 +585,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xiao-yr.github.io/2022/07/01/openmmlab/">https://xiao-yr.github.io/2022/07/01/openmmlab/</a>
+                    <a href="https://xiao-yr.github.io/2022/09/05/c-ba-gu-bi-ji/">https://xiao-yr.github.io/2022/09/05/c-ba-gu-bi-ji/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -671,8 +623,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                                    <span class="chip bg-color">-深度学习</span>
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">-C++</span>
                                 </a>
                             
                         </div>
@@ -1105,9 +1057,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2022/09/05/c-ba-gu-bi-ji/">
                     <div class="card-image">
@@ -1125,9 +1078,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-09-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-09-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1140,6 +1093,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1158,31 +1112,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/06/23/yolov3-shuo-ming/">
+                <a href="/2022/07/01/openmmlab/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="yolov3说明">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="openmmdetaction">
                         
-                        <span class="card-title">yolov3说明</span>
+                        <span class="card-title">openmmdetaction</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            这是关于yolov3的部分说明
+                            这是关于MMdetaction的学习笔记
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-23
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-01
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/yolo/" class="post-category">
-                                    yolo
+                            <a href="/categories/openmmlab/" class="post-category">
+                                    openmmlab
                                 </a>
                             
                             

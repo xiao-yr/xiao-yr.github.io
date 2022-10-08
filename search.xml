@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>C++面试宝典</title>
+      <link href="/2022/09/05/c-ba-gu-bi-ji/"/>
+      <url>/2022/09/05/c-ba-gu-bi-ji/</url>
+      
+        <content type="html"><![CDATA[<h1 id="GCC编译过程"><a href="#GCC编译过程" class="headerlink" title="GCC编译过程"></a>GCC编译过程</h1><h3 id="一、引言"><a href="#一、引言" class="headerlink" title="一、引言"></a>一、引言</h3><p>GCC：“GNU Compiler Collection”，是一组编译器集合，支持C、C++、Objective-C、Objective-C++、Go和RBIG语言的编译。、</p><p>GCC完整的编译过程分为4个阶段，分别为预处理、编译、装载和链接。</p><h3 id="二、GCC编译的输出参数"><a href="#二、GCC编译的输出参数" class="headerlink" title="二、GCC编译的输出参数"></a>二、GCC编译的输出参数</h3><p>  由于GCC是一组编译器集合，因此输入的文件后缀名决定了GCC的编译方式，下面列出了常见的文件后缀名对应的编译方式：</p><table><thead><tr><th align="center">文件后缀名</th><th align="center">编译方式</th></tr></thead><tbody><tr><td align="center">.c</td><td align="center">C语言源代码，并且需要进行预处理</td></tr><tr><td align="center">.i</td><td align="center">已经预处理完成后的C语言源代码</td></tr><tr><td align="center">.ii</td><td align="center">已经预处理完成后的C++源代码</td></tr><tr><td align="center">.m</td><td align="center">Objective-C源代码，并且必须进行libobjc库的链接</td></tr><tr><td align="center">.mi</td><td align="center">已经预处理完成后的Objective-C源代码</td></tr><tr><td align="center">.M或.mm</td><td align="center">Objective-C++源代码，并且必须进行libobjc库的链接</td></tr><tr><td align="center">.mii</td><td align="center">已经预处理完成后的Objective-C++源代码</td></tr><tr><td align="center">.h</td><td align="center">C,C++,Objective-C的头文件，会被处理进预编译头</td></tr><tr><td align="center">.cc , .cp , .cxx , .cpp , .CPP , .c++ , .C</td><td align="center">C++语言源文件，需要进行预编译处理</td></tr><tr><td align="center">.f , .for , .ftn</td><td align="center">已经预处理完成后的Fortran语言源文件</td></tr><tr><td align="center">.F , .FOR , .fpp , .FPP , .FTN</td><td align="center">Fortran语言源文件，需要进行预编译处理</td></tr><tr><td align="center">go</td><td align="center">Go语言源文</td></tr><tr><td align="center"></td><td align="center"></td></tr></tbody></table><p>下面以一个简单的C语言源文件来作为示例文件进行GCC的编译演示，首先编写一个简单的C程序如下，将文件名命名为a.c：</p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> <span class="type">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%s\n"</span>,<span class="string">"Hello"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure><h4 id="·预编译处理"><a href="#·预编译处理" class="headerlink" title="·预编译处理"></a>·预编译处理</h4><p>  使用 -E 参数设置GCC只进行预编译处理，例如对上面的a.c源文件执行如下的GCC命令：</p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.c -E &gt; a.i</span><br></pre></td></tr></tbody></table></figure><p>需要注意，GCC会将编译后的内容输出到a.i这个文件中，执行命令后，打开a.i文件，你会发现一个简单的C源文件被预处理成了500多行代码，你可以尝试在源文件中添加宏定义，预处理后所有的宏定义都被直接替换了。</p><p>  使用 -S 参数设置GCC进行编译功能，可以将预处理后的文件编译为汇编源代码，例如：</p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.i -S &gt; a.S</span><br></pre></td></tr></tbody></table></figure><p>.S为后缀名的文件为汇编源文件，-S编译是高级语言向低级语言转换的过程。</p><p>使用 -c 参数设置GCC进行编译，可以将汇编后的汇编源文件编译成机器代码。例如：</p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.i -c &gt; a.o</span><br></pre></td></tr></tbody></table></figure><p>.o后缀名的文件一般我们就没有办法读懂了，其是机器码。-c编译是编程语言向机器语言转换的过程。</p><p>除了上面提到的几个参数外，可以使用-o参数直接生成目标文件，这个参数会根据输入文件的后缀名进行处理，直接生成可执行文件，例如：</p><figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.o -o a.out</span><br></pre></td></tr></tbody></table></figure><p>其实使用.c为后缀名的C语言源文件也可以直接使用-o参数生成可执行文件，此时GCC会聚合前面的预处理，编译，连接等过程。.out为后缀名的文件是可执行文件，在终端可以直接执行</p><figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc a.o -o a.out</span><br><span class="line">Hello</span><br></pre></td></tr></tbody></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> C++面试 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> -C++ </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>openmmdetaction</title>
       <link href="/2022/07/01/openmmlab/"/>
       <url>/2022/07/01/openmmlab/</url>
@@ -33,7 +58,7 @@
       <link href="/2022/06/23/yolov3-shuo-ming/"/>
       <url>/2022/06/23/yolov3-shuo-ming/</url>
       
-        <content type="html"><![CDATA[<ul><li><p>yolo是根据中心点，w和h  （速度快，互不影响）</p></li><li><p>传统目标检测：左下角和右下角的坐标</p></li></ul><p>yolo将物体分为了9种：大中小—正方形 长矩形 竖矩形</p><p>首先把图片等分，然后根据锚点画框，最后通过IOU来判断框。</p><p>偏移量：通过中心点的坐标去数格子，坐标除以格子的宽度可以得到格子的位置 再分离整数部分和小数部分，小数部分就是偏移量。（求pw,ph,分类）【对神经网络的输出取指数，最后取对数】</p><p>1*1卷积的目的是降通道，例如（32，32，10）通过（1，1，10）生成（32，32，1）的特征图</p><p>3*3卷积的目的是像素融合并进行降通道</p><p>下采样原理:图像尺寸为M<em>N。对其进行s倍下采样，即得到（M/s）</em>(N/s)尺寸的分辨率图像，s需为M和N的公约数，对于矩阵形式图像的含义即为将原始图像s*s窗口内的图像编程为一个像素，这个像素点的值就是窗口内所有像素的均值。在YOLOv3的网络结构中并未采用最大值池化或平均值池化方法进行降采样，而是采用步长为2的卷积来进行降采样。</p><p>上采样原理:图像放大几乎都是采用内插值方法，即在原有图像的基础上在各个像素之间采用合适的插值算法插入新的元素。</p><p>在YOLOv3的网络结构中共图像的像素进行了5次下采样，每次采样步长为2，所以输入图像的大小需要为32的倍数。</p><p>concat层：张量拼接 将darknet中间层和后面的某一层的上采样进行拼接（特征有前后关系，深度不同的情况下）</p><p><img src="/2022/06/23/yolov3-shuo-ming/image-20220609191045044.png"></p><p><span class="github-emoji"><span>😂</span><img src="https://github.githubassets.com/images/icons/emoji/unicode/1f602.png?v8" aria-hidden="true" onerror="this.parent.classList.add('github-emoji-fallback')"></span></p>]]></content>
+        <content type="html"><![CDATA[<ul><li><p>yolo是根据中心点，w和h  （速度快，互不影响）</p></li><li><p>传统目标检测：左下角和右下角的坐标</p></li></ul><p>yolo将物体分为了9种：大中小—正方形 长矩形 竖矩形</p><p>首先把图片等分，然后根据锚点画框，最后通过IOU来判断框。</p><p>偏移量：通过中心点的坐标去数格子，坐标除以格子的宽度可以得到格子的位置 再分离整数部分和小数部分，小数部分就是偏移量。（求pw,ph,分类）【对神经网络的输出取指数，最后取对数】</p><p>1*1卷积的目的是降通道，例如（32，32，10）通过（1，1，10）生成（32，32，1）的特征图</p><p>3*3卷积的目的是像素融合并进行降通道</p><p>下采样原理:图像尺寸为M<em>N。对其进行s倍下采样，即得到（M/s）</em>(N/s)尺寸的分辨率图像，s需为M和N的公约数，对于矩阵形式图像的含义即为将原始图像s*s窗口内的图像编程为一个像素，这个像素点的值就是窗口内所有像素的均值。在YOLOv3的网络结构中并未采用最大值池化或平均值池化方法进行降采样，而是采用步长为2的卷积来进行降采样。</p><p>上采样原理:图像放大几乎都是采用内插值方法，即在原有图像的基础上在各个像素之间采用合适的插值算法插入新的元素。</p><p>在YOLOv3的网络结构中共图像的像素进行了5次下采样，每次采样步长为2，所以输入图像的大小需要为32的倍数。</p><p>concat层：张量拼接 将darknet中间层和后面的某一层的上采样进行拼接（特征有前后关系，深度不同的情况下）</p><p><img src="/2022/06/23/yolov3-shuo-ming/image-20220609191045044.png"></p>]]></content>
       
       
       <categories>
