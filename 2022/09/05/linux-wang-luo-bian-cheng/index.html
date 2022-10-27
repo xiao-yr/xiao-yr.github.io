@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="yolov3说明, 摸鱼闲话">
+    <meta name="keywords" content="linux网络编程, 摸鱼闲话">
     <meta name="description" content="有空得闲，偷得浮生半日闲">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>yolov3说明 | 摸鱼闲话</title>
+    <title>linux网络编程 | 摸鱼闲话</title>
     <link rel="icon" type="image/png" href="/free.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -268,12 +268,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">yolov3说明</h1>
+                    <h1 class="description center-align post-title">linux网络编程</h1>
                 </div>
             </div>
         </div>
@@ -389,8 +389,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                                <span class="chip bg-color">-深度学习</span>
+                            <a href="/tags/C/">
+                                <span class="chip bg-color">-C++</span>
                             </a>
                         
                     </div>
@@ -401,8 +401,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/yolo/" class="post-category">
-                                yolo
+                            <a href="/categories/linux/" class="post-category">
+                                linux
                             </a>
                         
                     </div>
@@ -414,28 +414,28 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-06-23
+                    2022-09-05
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-09-05
+                    2022-10-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    479
+                    2.9k
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    11 分
                 </div>
                 
 
@@ -455,22 +455,276 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <ul>
-<li><p>yolo是根据中心点，w和h  （速度快，互不影响）</p>
+                <h1 id="Linux开发（c-）"><a href="#Linux开发（c-）" class="headerlink" title="Linux开发（c++）"></a>Linux开发（c++）</h1><h1 id="1-linux基础"><a href="#1-linux基础" class="headerlink" title="1. linux基础"></a>1. linux基础</h1><h3 id="1-1-GCC"><a href="#1-1-GCC" class="headerlink" title="1.1 GCC"></a>1.1 GCC</h3><p>GCC：“GNU Compiler Collection”，是一组编译器集合，支持C、C++、Objective-C、Objective-C++、Go和RBIG语言的编译。、</p>
+<p>GCC完整的编译过程分为4个阶段，分别为预处理、编译、装载和链接。</p>
+<h3 id="1-2-GCC编译的输出参数"><a href="#1-2-GCC编译的输出参数" class="headerlink" title="1.2 GCC编译的输出参数"></a>1.2 GCC编译的输出参数</h3><p>  由于GCC是一组编译器集合，因此输入的文件后缀名决定了GCC的编译方式，下面列出了常见的文件后缀名对应的编译方式：</p>
+<table>
+<thead>
+<tr>
+<th align="center">文件后缀名</th>
+<th align="center">编译方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">.c</td>
+<td align="center">C语言源代码，并且需要进行预处理</td>
+</tr>
+<tr>
+<td align="center">.i</td>
+<td align="center">已经预处理完成后的C语言源代码</td>
+</tr>
+<tr>
+<td align="center">.ii</td>
+<td align="center">已经预处理完成后的C++源代码</td>
+</tr>
+<tr>
+<td align="center">.m</td>
+<td align="center">Objective-C源代码，并且必须进行libobjc库的链接</td>
+</tr>
+<tr>
+<td align="center">.mi</td>
+<td align="center">已经预处理完成后的Objective-C源代码</td>
+</tr>
+<tr>
+<td align="center">.M或.mm</td>
+<td align="center">Objective-C++源代码，并且必须进行libobjc库的链接</td>
+</tr>
+<tr>
+<td align="center">.mii</td>
+<td align="center">已经预处理完成后的Objective-C++源代码</td>
+</tr>
+<tr>
+<td align="center">.h</td>
+<td align="center">C,C++,Objective-C的头文件，会被处理进预编译头</td>
+</tr>
+<tr>
+<td align="center">.cc , .cp , .cxx , .cpp , .CPP , .c++ , .C</td>
+<td align="center">C++语言源文件，需要进行预编译处理</td>
+</tr>
+<tr>
+<td align="center">.f , .for , .ftn</td>
+<td align="center">已经预处理完成后的Fortran语言源文件</td>
+</tr>
+<tr>
+<td align="center">.F , .FOR , .fpp , .FPP , .FTN</td>
+<td align="center">Fortran语言源文件，需要进行预编译处理</td>
+</tr>
+<tr>
+<td align="center">go</td>
+<td align="center">Go语言源文</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>下面以一个简单的C语言源文件来作为示例文件进行GCC的编译演示，首先编写一个简单的C程序如下，将文件名命名为a.c：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> <span class="type">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%s\n"</span>,<span class="string">"Hello"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="1-2-1-预编译处理"><a href="#1-2-1-预编译处理" class="headerlink" title="1.2.1 预编译处理"></a>1.2.1 预编译处理</h4><p>  使用 -E 参数设置GCC只进行预编译处理，例如对上面的a.c源文件执行如下的GCC命令：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.c -E &gt; a.i</span><br></pre></td></tr></tbody></table></figure>
+
+<p>GCC会将编译后的内容输出到a.i文件中，打开a.i文件 里面包含对#include文件的复制以及宏定义的替换等。</p>
+<p>  使用 -S 参数设置GCC进行编译功能，可以将预处理后的文件编译为汇编源代码，例如：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.i -S &gt; a.S</span><br></pre></td></tr></tbody></table></figure>
+
+<p>.S为后缀名的文件为汇编源文件，-S编译是高级语言向低级语言转换的过程。</p>
+<p>使用 -c 参数设置GCC进行编译，可以将汇编后的汇编源文件编译成机器代码。例如：</p>
+<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.i -c &gt; a.o</span><br></pre></td></tr></tbody></table></figure>
+
+<p>.o文件是机器码。-c编译是编程语言向机器语言转换的过程。</p>
+<p>除了上面提到的几个参数外，可以使用-o参数直接生成目标文件，这个参数会根据输入文件的后缀名进行处理，直接生成可执行文件，例如：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.o -o a.out</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="1-3-GCC常用参数"><a href="#1-3-GCC常用参数" class="headerlink" title="1.3 GCC常用参数"></a>1.3 GCC常用参数</h3><table>
+<thead>
+<tr>
+<th align="center">gcc编译选项</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-E</td>
+<td align="center">预处理指定的源文件，不进行编译</td>
+</tr>
+<tr>
+<td align="center">-S</td>
+<td align="center">编译指定的源文件，但是不进行汇编</td>
+</tr>
+<tr>
+<td align="center">-c</td>
+<td align="center">编译、汇编指定的源文件，但是不进行链接</td>
+</tr>
+<tr>
+<td align="center">-o [file1] [file2] / [file2] -o [file1]</td>
+<td align="center">将文件 file2 编译成可执行文件 file1</td>
+</tr>
+<tr>
+<td align="center">-I directory</td>
+<td align="center">指定 include 包含文件的搜索目录</td>
+</tr>
+<tr>
+<td align="center">-g</td>
+<td align="center">在编译的时候，生成调试信息，该程序可以被调试器调试</td>
+</tr>
+<tr>
+<td align="center">-D</td>
+<td align="center">在程序编译的时候，指定一个宏</td>
+</tr>
+<tr>
+<td align="center">-w</td>
+<td align="center">不生成任何警告信息</td>
+</tr>
+<tr>
+<td align="center">-Wall</td>
+<td align="center">生成所有警告信息</td>
+</tr>
+<tr>
+<td align="center">-On</td>
+<td align="center">n的取值范围：0~3。编译器的优化选项的4个级别，-O0表 示没有优化，-O1为缺省值，-O3优化级别最高</td>
+</tr>
+<tr>
+<td align="center">-l</td>
+<td align="center">在程序编译的时候，指定使用的库</td>
+</tr>
+<tr>
+<td align="center">-L</td>
+<td align="center">指定编译的时候，搜索的库的路径。</td>
+</tr>
+<tr>
+<td align="center">-fPIC/fpic</td>
+<td align="center">生成与位置无关的代码</td>
+</tr>
+<tr>
+<td align="center">-shared</td>
+<td align="center">生成共享目标文件，通常用在建立共享库时</td>
+</tr>
+<tr>
+<td align="center">-std</td>
+<td align="center">指定C方言，如:-std=c99，gcc默认的方言是GNU C</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<h3 id="1-4-静态库的制作"><a href="#1-4-静态库的制作" class="headerlink" title="1.4 静态库的制作"></a>1.4 静态库的制作</h3><p>◼ 命名规则：</p>
+<p>​    ◆ Linux : libxxx.a  lib : 前缀（固定） xxx : 库的名字，自己起 .a : 后缀（固定） </p>
+<p>​    ◆ Windows : <font color="#ff69b4" style="background:yellow">libxxx.lib</font> </p>
+<p>◼ 静态库的制作： </p>
+<p>​    ◆ gcc 获得 .o 文件 </p>
+<p>​    ◆ 将 .o 文件打包，使用 ar 工具（archive） <font color="red">ar rcs libxxx.a xxx.o xxx.o</font> </p>
+<p>​            r – 将文件插入备存文件中 c – 建立备存文件 s – 索引</p>
+<h3 id="1-5-动态库的制作"><a href="#1-5-动态库的制作" class="headerlink" title="1.5 动态库的制作"></a>1.5 动态库的制作</h3><p>◼命名规则： </p>
+<p>​    ◆ Linux : libxxx.so lib : 前缀（固定） xxx : 库的名字，自己起 .so : 后缀（固定） 在Linux下是一个可执行文件 </p>
+<p>​    ◆ Windows : libxxx.dll </p>
+<p>◼ 动态库的制作：</p>
+<p>​    ◆ gcc 得到 .o 文件，得到和位置无关的代码 <font color="red">gcc -c –fpic/-fPIC a.c b.c</font> </p>
+<p>​    ◆ gcc 得到动态库<font color="red"> gcc -shared a.o b.o -o libcalc.so</font></p>
+<p>◼ 静态库：GCC 进行链接时，会把静态库中代码打包到可执行程序中 </p>
+<p>◼ 动态库：GCC 进行链接时，动态库的代码不会被打包到可执行程序中 </p>
+<p>◼ 程序启动之后，动态库会被动态加载到内存中，通过 ldd （list dynamic dependencies）命令检查动态库依赖关系 </p>
+<p>◼ 如何定位共享库文件呢？ 当系统加载可执行代码时候，能够知道其所依赖的库的名字，但是还需要知道绝对路 径。此时就需要系统的动态载入器来获取该绝对路径。对于elf格式的可执行程序，是 由ld-linux.so来完成的，它先后搜索elf文件的 <strong>DT_RPATH</strong>段 ——&gt; 环境变量 <strong>LD_LIBRARY_PATH</strong> ——&gt; <strong>/etc/ld.so.cache</strong>文件列表 ——&gt; <strong>/lib/，/usr/lib</strong> 目录找到库文件后将其载入内存。</p>
+<h3 id="1-6-对比"><a href="#1-6-对比" class="headerlink" title="1.6 对比"></a>1.6 对比</h3><p><strong>静态库的优缺点</strong></p>
+<p>◼ 优点： </p>
+<p>​    ◆ 静态库被打包到应用程序中加载速度快 </p>
+<p>​    ◆ 发布程序无需提供静态库，移植方便 程序</p>
+<p> ◼ 缺点： </p>
+<p>​    ◆ 消耗系统资源，浪费内存 </p>
+<p>​    ◆ 更新、部署、发布麻烦</p>
+<p><strong>动态库的优缺点</strong></p>
+<p>◼ 优点： </p>
+<p>​    ◆ 可以实现进程间资源共享（共享库） </p>
+<p>​    ◆ 更新、部署、发布简单 </p>
+<p>​    ◆ 可以控制何时加载动态库</p>
+<p>◼ 缺点： </p>
+<p>​    ◆ 加载速度比静态库慢 </p>
+<p>​    ◆ 发布程序时需要提供依赖的动态库</p>
+<h2 id="2-Makefile与GDB调试"><a href="#2-Makefile与GDB调试" class="headerlink" title="2 Makefile与GDB调试"></a>2 Makefile与GDB调试</h2><h3 id="2-1-Makefile"><a href="#2-1-Makefile" class="headerlink" title="2.1 Makefile"></a>2.1 Makefile</h3><p>定义了一系列规则去指定文件编译的先后顺序，文件是否需要重新编译，相当于一个指令集</p>
+<p><strong>◼ Makefile规则</strong></p>
+<ol>
+<li><p>一个Makefile文件中可以有一个或者多个规则 </p>
+<p>​        <font color="red">目标 … ：依赖 …</font></p>
+<p>​            命令（shell命令）</p>
+<p>​            …</p>
+<p><strong>目标：</strong>最终要生成的文件（伪目标除外） </p>
+<p><strong>依赖：</strong>生成目标所需要的文件或是目标 </p>
+<p><strong>命令：</strong>通过执行命令对依赖操作生成目标（命令前必须 Tab 缩进）</p>
 </li>
-<li><p>传统目标检测：左下角和右下角的坐标</p>
-</li>
-</ul>
-<p>yolo将物体分为了9种：大中小—正方形 长矩形 竖矩形</p>
-<p>首先把图片等分，然后根据锚点画框，最后通过IOU来判断框。</p>
-<p>偏移量：通过中心点的坐标去数格子，坐标除以格子的宽度可以得到格子的位置 再分离整数部分和小数部分，小数部分就是偏移量。（求pw,ph,分类）【对神经网络的输出取指数，最后取对数】</p>
-<p>1*1卷积的目的是降通道，例如（32，32，10）通过（1，1，10）生成（32，32，1）的特征图</p>
-<p>3*3卷积的目的是像素融合并进行降通道</p>
-<p>下采样原理:图像尺寸为M<em>N。对其进行s倍下采样，即得到（M/s）</em>(N/s)尺寸的分辨率图像，s需为M和N的公约数，对于矩阵形式图像的含义即为将原始图像s*s窗口内的图像编程为一个像素，这个像素点的值就是窗口内所有像素的均值。在YOLOv3的网络结构中并未采用最大值池化或平均值池化方法进行降采样，而是采用步长为2的卷积来进行降采样。</p>
-<p>上采样原理:图像放大几乎都是采用内插值方法，即在原有图像的基础上在各个像素之间采用合适的插值算法插入新的元素。</p>
-<p>在YOLOv3的网络结构中共图像的像素进行了5次下采样，每次采样步长为2，所以输入图像的大小需要为32的倍数。</p>
-<p>concat层：张量拼接 将darknet中间层和后面的某一层的上采样进行拼接（特征有前后关系，深度不同的情况下）</p>
-<p><img src="/2022/06/23/yolov3-shuo-ming/image-20220609191045044.png"></p>
+</ol>
+<p><strong>Makefile 中的其它规则一般都是为第一条规则服务的。</strong></p>
+<p>◼ 命令在执行之前，需要先检查规则中的依赖是否存在 </p>
+<p>​     如果存在，执行命令 </p>
+<p>​     如果不存在，向下检查其它的规则，检查有没有一个规则是用来生成这个依赖的， 如果找到了，则执行该规则中的命令 </p>
+<p>◼ 检测更新，在执行规则中的命令时，会比较目标和依赖文件的时间 </p>
+<p>​     如果依赖的时间比目标的时间晚，需要重新生成目标 </p>
+<p>​     如果依赖的时间比目标的时间早，目标不需要更新，对应规则中的命令不需要被 执行</p>
+<p><strong>注意事项：</strong></p>
+<pre><code>1. 如果第一个规则有多个依赖，可续可以分别对单个依赖写规则
+</code></pre>
+<h4 id="2-1-1书写变量"><a href="#2-1-1书写变量" class="headerlink" title="2.1.1书写变量"></a>2.1.1书写变量</h4><p>◼ 自定义变量 </p>
+<p>​    变量名=变量值 var=hello </p>
+<p>◼ 预定义变量 </p>
+<p>​    AR : 归档维护程序的名称，默认值为 ar </p>
+<p>​    CC : C 编译器的名称，默认值为 cc </p>
+<p>​    CXX : C++ 编译器的名称，默认值为 g++ </p>
+<p>​    $@ : 目标的完整名称 </p>
+<p>​    $&lt; : 第一个依赖文件的名称 </p>
+<p>​    $^ : 所有的依赖文件 </p>
+<p>◼ 获取变量的值 </p>
+<p>​    $(变量名)</p>
+<p>​    $(var)</p>
+<p>自动变量只能在规则的命令中使用 </p>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">app:main.c a.c b.c</span></span><br><span class="line">	gcc -c mian.c a.c b.c -o app</span><br><span class="line"><span class="variable">$@</span>:<span class="variable">$^</span></span><br><span class="line">	<span class="variable">$(CC)</span> -c <span class="variable">$^</span> -o <span class="variable">$@</span></span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">	- %: 通配符，匹配一个字符串</span><br><span class="line">	- 两个%匹配的是同一个字符串</span><br><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">	gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>◼ $(wildcard PATTERN…) </p>
+<p> 功能：获取指定目录下指定类型的文件列表 </p>
+<p> 参数：PATTERN 指的是某个或多个目录下的对应的某种类型的文件，如果有多 个目录，一般使用空格间隔 </p>
+<p> 返回：得到的若干个文件的文件列表，文件名之间使用空格间隔 </p>
+<p> 示例： </p>
+<p>​    <code>$(wildcard *.c ./sub/*.c)</code></p>
+<p>​    返回值格式: a.c b.c c.c d.c e.c f.c</p>
+<p>◼ $(patsubst <parttern>,<replacement>,<text>)</text></replacement></parttern></p>
+<p> 功能：查找<text>中的单词(单词以“空格”、“Tab”或“回车”“换行”分隔)是否符合<pattern>模式，如果匹配的话，则以<replacement>替换。 </replacement></pattern></text></p>
+<p> <pattern>可以包括通配符<code>%</code>，表示任意长度的字串。如果<replacement>中也包含<code>%</code>，那么，<replacement>中的这个<code>%</code>将是<parttern>中的那个% 所代表的字串。(可以用<code>\</code>来转义，以<code>\%</code>来表示真实含义的<code>%</code>字符) </parttern></replacement></replacement></pattern></p>
+<p> 返回：函数返回被替换过后的字符串 </p>
+<p> 示例：</p>
+<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, x.c bar.c)</span></span><br><span class="line"><span class="section">返回值格式: x.o bar.o</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>◼.PHONY：target 表示target是一个伪目标，不会生成文件</p>
+<h3 id="2-2-GDB"><a href="#2-2-GDB" class="headerlink" title="2.2 GDB"></a>2.2 GDB</h3><p>GDB:断点调试工具 编译时使用<code>-g</code>打开调式选项，另外使用<code>-wall</code>选项打开所有warning.</p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -g -Wall program.c -o program</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>命令：</strong></p>
+<p>◼ 启动和退出  gdb 可执行程序  quit  退出</p>
+<p>◼ 给程序设置参数/获取设置参数 set args 10 20       show args</p>
+<p> ◼ GDB 使用帮助    help</p>
+<p>◼ 查看当前文件代码 list/l （从默认位置显示） list/l 行号 （从指定的行显示） list/l 函数名（从指定的函数显示） </p>
+<p>◼ 查看非当前文件代码 list/l 文件名:行号 list/l 文件名:函数名</p>
+<p>◼ 设置显示的行数  <strong>show list/listsize set list/listsize 行数</strong></p>
+<p>◼ 设置断点 b/break 行号   b/break 函数名    b/break 文件名:行号   b/break 文件名:函数 </p>
+<p>◼ 查看断点 i/info b/break </p>
+<p>◼ 删除断点 d/del/delete 断点编号</p>
+<p>◼ 设置断点无效 dis/disable 断点编号 </p>
+<p>◼ 设置断点生效 ena/enable 断点编号 </p>
+<p>◼ 设置条件断点（一般用在循环的位置） b/break 10 if i==5</p>
+<p>◼ 运行GDB程序 start（程序停在第一行） run（遇到断点才停）</p>
+<p>◼ 继续运行，到下一个断点停 c/continue </p>
+<p>◼ 向下执行一行代码（不会进入函数体） n/next </p>
+<p>◼ 变量操作 p/print 变量名（打印变量值） ptype 变量名（打印变量类型）</p>
+<p>◼ 向下单步调试（遇到函数进入函数体） s/step finish（跳出函数体） </p>
+<p>◼ 自动变量操作 display 变量名（自动打印指定变量的值） i/info display (查看编号) undisplay （删除编号） </p>
+<p>◼ 其它操作 set var 变量名=变量值 （循环中用的较多） until （跳出循环）</p>
+<h2 id="IO操作"><a href="#IO操作" class="headerlink" title="IO操作"></a>IO操作</h2><p> C库函数：使用fopen打开文件，返回值FILE *fp,其中<strong>FLIE结构体</strong>里面包括文化描述符（整型值，索引），文件读写指针（位置），I/O缓存区（内存地址）。</p>
+<p><img src="/2022/09/05/linux-wang-luo-bian-cheng/20200630172111410.png"></p>
+<p><strong>虚拟地址空间：</strong> 3G-4G 内核区（内存管理，进程管理，驱动管理，VFS虚拟文件系统）（）</p>
+<p>​                        0-3G 用户区  从高地址到低地址（环境变量-&gt;命令行参数-&gt;命令行参数-&gt;栈空间（小）-&gt;共享库&lt;-堆空间（大）-&gt;(.bcc（未初始化全局变量） .data（已初始化全局变量） .text 受保护的地址0~4k)）</p>
+<p>虚拟地址空间会被MMU映射到物理内存中。</p>
+<p><strong>文件描述符：</strong>文件描述符表保存在PCB（进程控制块）中。 其中0-&gt;STDIN_FILENO, 1-&gt;STDOUT_FILENO，3-&gt;STDERR_FILENO。</p>
+<p>每个新的文件占用空闲的最小的一个文件描述符。</p>
+<p><strong>IO函数：</strong>fopen(c) -&gt; open</p>
 
                 
             </div>
@@ -497,7 +751,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://xiao-yr.github.io/2022/06/23/yolov3-shuo-ming/">https://xiao-yr.github.io/2022/06/23/yolov3-shuo-ming/</a>
+                    <a href="https://xiao-yr.github.io/2022/09/05/linux-wang-luo-bian-cheng/">https://xiao-yr.github.io/2022/09/05/linux-wang-luo-bian-cheng/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -535,8 +789,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                                    <span class="chip bg-color">-深度学习</span>
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">-C++</span>
                                 </a>
                             
                         </div>
@@ -973,6 +1227,55 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
+                <a href="/2022/10/05/shu-ju-jie-gou-yu-suan-fa/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="数据结构与算法">
+                        
+                        <span class="card-title">数据结构与算法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            算法
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-05
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E7%AE%97%E6%B3%95/" class="post-category">
+                                    算法
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">-C++</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
                 <a href="/2022/07/01/openmmlab/">
                     <div class="card-image">
                         
@@ -989,9 +1292,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-07-01
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-07-01
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1004,56 +1307,6 @@
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                        <span class="chip bg-color">-深度学习</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/06/23/yolov3-shuo-ming/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="yolov3说明">
-                        
-                        <span class="card-title">yolov3说明</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            这是关于yolov3的部分说明
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-06-23
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/yolo/" class="post-category">
-                                    yolo
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
                 
                 <div class="card-action article-tags">
                     
