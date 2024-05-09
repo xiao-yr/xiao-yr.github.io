@@ -19,7 +19,7 @@
     <title>linux网络编程 | 摸鱼闲话</title>
     <link rel="icon" type="image/png" href="/free.png">
 
-    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
     <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="/css/matery.css">
     <link rel="stylesheet" type="text/css" href="/css/my.css">
 
-    <script src="/libs/jquery/jquery.min.js"></script>
+    <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
 <meta name="generator" content="Hexo 5.4.2">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
@@ -421,7 +421,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2022-10-27
+                    2022-11-17
                 </div>
                 
 
@@ -449,6 +449,9 @@
         </div>
         <hr class="clearfix">
 
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
         
 
         
@@ -519,22 +522,27 @@
 </tr>
 </tbody></table>
 <p>下面以一个简单的C语言源文件来作为示例文件进行GCC的编译演示，首先编写一个简单的C程序如下，将文件名命名为a.c：</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span> <span class="type">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>{</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%s\n"</span>,<span class="string">"Hello"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+<pre class="language-C++" data-language="C++"><code class="language-C++">#include &lt;stdio.h&gt;
+int main(int argc, char const *argv[])
+{
+	printf("%s\n","Hello");
+	return 0;
+}</code></pre>
 
 <h4 id="1-2-1-预编译处理"><a href="#1-2-1-预编译处理" class="headerlink" title="1.2.1 预编译处理"></a>1.2.1 预编译处理</h4><p>  使用 -E 参数设置GCC只进行预编译处理，例如对上面的a.c源文件执行如下的GCC命令：</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.c -E &gt; a.i</span><br></pre></td></tr></tbody></table></figure>
+<pre class="language-c++" data-language="c++"><code class="language-c++">gcc a.c -E &gt; a.i</code></pre>
 
 <p>GCC会将编译后的内容输出到a.i文件中，打开a.i文件 里面包含对#include文件的复制以及宏定义的替换等。</p>
 <p>  使用 -S 参数设置GCC进行编译功能，可以将预处理后的文件编译为汇编源代码，例如：</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.i -S &gt; a.S</span><br></pre></td></tr></tbody></table></figure>
+<pre class="language-c++" data-language="c++"><code class="language-c++">gcc a.i -S &gt; a.S</code></pre>
 
 <p>.S为后缀名的文件为汇编源文件，-S编译是高级语言向低级语言转换的过程。</p>
 <p>使用 -c 参数设置GCC进行编译，可以将汇编后的汇编源文件编译成机器代码。例如：</p>
-<figure class="highlight c++"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.i -c &gt; a.o</span><br></pre></td></tr></tbody></table></figure>
+<pre class="language-c++" data-language="c++"><code class="language-c++">gcc a.i -c &gt; a.o</code></pre>
 
 <p>.o文件是机器码。-c编译是编程语言向机器语言转换的过程。</p>
 <p>除了上面提到的几个参数外，可以使用-o参数直接生成目标文件，这个参数会根据输入文件的后缀名进行处理，直接生成可执行文件，例如：</p>
-<figure class="highlight plaintext"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc a.o -o a.out</span><br></pre></td></tr></tbody></table></figure>
+<pre class="language-none"><code class="language-none">gcc a.o -o a.out</code></pre>
 
 <h3 id="1-3-GCC常用参数"><a href="#1-3-GCC常用参数" class="headerlink" title="1.3 GCC常用参数"></a>1.3 GCC常用参数</h3><table>
 <thead>
@@ -675,9 +683,16 @@
 <p>​    $(变量名)</p>
 <p>​    $(var)</p>
 <p>自动变量只能在规则的命令中使用 </p>
-<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">app:main.c a.c b.c</span></span><br><span class="line">	gcc -c mian.c a.c b.c -o app</span><br><span class="line"><span class="variable">$@</span>:<span class="variable">$^</span></span><br><span class="line">	<span class="variable">$(CC)</span> -c <span class="variable">$^</span> -o <span class="variable">$@</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class="language-makefile" data-language="makefile"><code class="language-makefile"><span class="token target symbol">app</span><span class="token punctuation">:</span>main.c a.c b.c
+	gcc -c mian.c a.c b.c -o app
+<span class="token target symbol"><span class="token variable">$@</span></span><span class="token punctuation">:</span><span class="token variable">$^</span>
+	<span class="token variable">$</span><span class="token punctuation">(</span>CC<span class="token punctuation">)</span> -c <span class="token variable">$^</span> -o <span class="token variable">$@</span></code></pre>
 
-<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">	- %: 通配符，匹配一个字符串</span><br><span class="line">	- 两个%匹配的是同一个字符串</span><br><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">	gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class="language-makefile" data-language="makefile"><code class="language-makefile"><span class="token target symbol">%.o</span><span class="token punctuation">:</span>%.c
+<span class="token target symbol">	- %</span><span class="token punctuation">:</span> 通配符，匹配一个字符串
+	- 两个%匹配的是同一个字符串
+<span class="token target symbol">%.o</span><span class="token punctuation">:</span>%.c
+	gcc -c <span class="token variable">$&lt;</span> -o <span class="token variable">$@</span></code></pre>
 
 <p>◼ $(wildcard PATTERN…) </p>
 <p> 功能：获取指定目录下指定类型的文件列表 </p>
@@ -691,11 +706,12 @@
 <p> <pattern>可以包括通配符<code>%</code>，表示任意长度的字串。如果<replacement>中也包含<code>%</code>，那么，<replacement>中的这个<code>%</code>将是<parttern>中的那个% 所代表的字串。(可以用<code>\</code>来转义，以<code>\%</code>来表示真实含义的<code>%</code>字符) </parttern></replacement></replacement></pattern></p>
 <p> 返回：函数返回被替换过后的字符串 </p>
 <p> 示例：</p>
-<figure class="highlight makefile"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(<span class="built_in">patsubst</span> %.c, %.o, x.c bar.c)</span></span><br><span class="line"><span class="section">返回值格式: x.o bar.o</span></span><br></pre></td></tr></tbody></table></figure>
+<pre class="language-makefile" data-language="makefile"><code class="language-makefile"><span class="token variable">$</span><span class="token punctuation">(</span><span class="token function">patsubst</span> %.c, %.o, x.c bar.c<span class="token punctuation">)</span>
+<span class="token target symbol">返回值格式</span><span class="token punctuation">:</span> x.o bar.o</code></pre>
 
 <p>◼.PHONY：target 表示target是一个伪目标，不会生成文件</p>
 <h3 id="2-2-GDB"><a href="#2-2-GDB" class="headerlink" title="2.2 GDB"></a>2.2 GDB</h3><p>GDB:断点调试工具 编译时使用<code>-g</code>打开调式选项，另外使用<code>-wall</code>选项打开所有warning.</p>
-<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -g -Wall program.c -o program</span><br></pre></td></tr></tbody></table></figure>
+<pre class="language-bash" data-language="bash"><code class="language-bash">gcc -g -Wall program.c -o program</code></pre>
 
 <p><strong>命令：</strong></p>
 <p>◼ 启动和退出  gdb 可执行程序  quit  退出</p>
@@ -1451,16 +1467,16 @@
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2019-2022</span>
+                <span id="year">2022-2024</span>
             
-            <span id="year">2019</span>
+            <span id="year">2022</span>
             <a href="/about" target="_blank">枭</a>
             |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
             |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">4.8k</span>&nbsp;字
+                class="white-color">5.2k</span>&nbsp;字
             
             
             
@@ -1654,8 +1670,6 @@ $(function () {
     })();
 </script>
 
-    
-    <script src="/libs/others/clicklove.js" async="async"></script>
     
     
     <script async src="/libs/others/busuanzi.pure.mini.js"></script>
